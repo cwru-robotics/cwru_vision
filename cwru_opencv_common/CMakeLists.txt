@@ -12,12 +12,13 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   tf
+  roslint
 )
 
 set(CMAKE_CXX_FLAGS "-std=c++0x ${CMAKE_CXX_FLAGS}")
 SET(LIB_TYPE STATIC) 
 
-
+roslint_cpp()
 
 add_service_files(DIRECTORY srv  
 FILES image_label.srv
@@ -167,6 +168,7 @@ target_link_libraries(gtest_cv_rotations
         ${catkin_LIBRARIES})
 
 
+
 catkin_add_gtest(gtest_ellipse_matching test/gtest_ellipse_matching.cpp)
 
 target_link_libraries(gtest_ellipse_matching
@@ -187,27 +189,7 @@ target_link_libraries(gtest_point_array_projection
        ${catkin_LIBRARIES})
 
 
-
-
-# Add rostests
-# add_rostest_gtest(rostest_manual_labeling test/rostest_manual_labeling.test test/rostest_manual_labeling.cpp)
-# target_link_libraries(rostest_manual_labeling manual_labeling_server ${catkin_LIBRARIES})
-# catkin_add_gtest(gtest_manual_labeling test/rostest_manual_labeling.test test/gtest_manual_labeling.cpp)
-# target_link_libraries(gtest_manual_labeling
-#        manual_labeling_server
-#        ${OpenCV_LIBRERIES}
-#        ${catkin_LIBRARIES})
-
-
-#add_rostest_gtest(rostest_ellipse_matching test/rostest_ellipse_matching.test test/rostest_ellipse_matching.cpp)
-
-#target_link_libraries(rostest_ellipse_matching
-#        ellipse_modeling_lib
-#        opencv_rot_lib
-#        ${OpenCV_LIBRERIES}
-#        ${catkin_LIBRARIES})
-
-
+#Add rostesting
         
 #add_rostest_gtest(rostest_point_array_projection test/gtest_point_array_projection.test test/gtest_point_array_projection.cpp)
 

@@ -30,6 +30,9 @@ namespace cv_local
 
 
 
+
+
+
 int byteError(int a,int b){
 
 	int  hueError1 = (256-a)%256+b;
