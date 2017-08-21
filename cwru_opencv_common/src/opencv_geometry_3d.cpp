@@ -185,22 +185,34 @@ namespace cv_3d
         double dirLength = norm(dir);
         std::vector< Point > cornersV;
 
-        // Draw a trapezoid.
-        dir *= (1/norm(dir));
-        Point2d radDir(-dir.y, dir.x);
-        Point2d c0 = pt0+radDir*radEst0;
-        Point2d c1 = pt1+radDir*radEst1;
-        Point2d c2 = pt1-radDir*radEst1;
-        Point2d c3 = pt0-radDir*radEst0;
+        // If the length of the projected cylinder is longer than the radius of the end,
+        // draw a trapezoid.
+        if (dirLength > radEst0)
+        {
+            dir *= (1/norm(dir));
+            Point2d radDir(-dir.y, dir.x);
+            Point2d c0 = pt0+radDir*radEst0;
+            Point2d c1 = pt1+radDir*radEst1;
+            Point2d c2 = pt1-radDir*radEst1;
+            Point2d c3 = pt0-radDir*radEst0;
 
-        cornersV.resize(4);
-        cornersV[0] = corners[0] = Point(c0.x, c0.y);
-        cornersV[1] = corners[1] = Point(c1.x, c1.y);
-        cornersV[2] = corners[2] = Point(c2.x, c2.y);
-        cornersV[3] = corners[3] = Point(c3.x, c3.y);
+            cornersV.resize(4);
+            cornersV[0] = corners[0] = Point(c0.x, c0.y);
+            cornersV[1] = corners[1] = Point(c1.x, c1.y);
+            cornersV[2] = corners[2] = Point(c2.x, c2.y);
+            cornersV[3] = corners[3] = Point(c3.x, c3.y);
 
-        // Draw the trapezoid.
-        fillConvexPoly(inputImage, corners, 4, color, CV_AA);
+            // Draw the trapezoid.
+            fillConvexPoly(inputImage, corners, 4, color, CV_AA);
+        }
+
+        // Otherwise, draw a circle.
+        else
+        {
+            Point center = 0.5 * (pt0 + pt1);
+            int radius = static_cast<int>(0.5 * (radEst0 + radEst1));
+            circle(inputImage, center, radius, color, -1);
+        }
 
         // Calculate the position and radius of the two ends.
         if (tips.needed())
@@ -214,8 +226,6 @@ namespace cv_3d
             tipMat.at<double>(4) = pt1.y;
             tipMat.at<double>(5) = radEst1;
         }
-
-        // TODO: Should add the alternative case when the projected length is shorter than the radius.
 
         // Calculate the Jacobian if needed.
         if (jac.needed())
