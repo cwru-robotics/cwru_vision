@@ -42,9 +42,8 @@
 ################################################################################
 
 # Use ubuntu trusty (14.04) with sudo privileges.
-dist: xenial
+dist: trusty
 sudo: required
-# group: deprecated-2017Q3
 language:
   - generic
 cache:
