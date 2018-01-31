@@ -212,6 +212,12 @@ namespace cv_3d
             Point center = 0.5 * (pt0 + pt1);
             int radius = static_cast<int>(0.5 * (radEst0 + radEst1));
             circle(inputImage, center, radius, color, -1);
+
+            cornersV.resize(4);
+            cornersV[0] = corners[0] = Point(center.x + radius, center.y + radius);
+            cornersV[1] = corners[1] = Point(center.x + radius, center.y - radius);
+            cornersV[2] = corners[2] = Point(center.x - radius, center.y + radius);
+            cornersV[3] = corners[3] = Point(center.x - radius, center.y - radius);
         }
 
         // Calculate the position and radius of the two ends.

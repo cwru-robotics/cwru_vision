@@ -40,6 +40,9 @@ using cv::cvtColor;
 using cv::Range;
 
 
+namespace cv_circle
+{
+
 cv::RotatedRect fillEllipseBW(const cv::Mat & inputImg, cv::Point seedPt)
 {
     std::vector< std::vector<Point> > contours;
@@ -98,9 +101,6 @@ cv::RotatedRect fillEllipseBW(const cv::Mat & inputImg, cv::Point seedPt)
 
 }
 
-
-namespace cv_circle
-{
 
 
 
